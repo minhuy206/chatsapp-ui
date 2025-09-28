@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3200';
+const API_BASE_URL = 'https://api-chatsapp.minhuy.dev';
 
 export class APIError extends Error {
   public status: number;

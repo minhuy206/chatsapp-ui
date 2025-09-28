@@ -229,7 +229,7 @@ export class ChatWebSocketClient {
  * Default WebSocket streaming client instance
  */
 export const webSocketStreamingClient = new ChatWebSocketClient({
-  websocketUrl: 'ws://localhost:3200/cable',
+  websocketUrl: 'wss://api-chatsapp.minhuy.dev/cable',
   retryConfig: {
     maxAttempts: 5,
     initialDelay: 1000,
@@ -251,7 +251,7 @@ export async function initializeConversationStreaming(
   error?: string
 }> {
   try {
-    const apiBaseUrl = 'http://localhost:3200'
+    const apiBaseUrl = 'https://api-chatsapp.minhuy.dev'
     const response = await fetch(
       `${apiBaseUrl}/api/v1/conversations/${conversationId}/stream?message_id=${messageId}&transport=websocket`,
       {
