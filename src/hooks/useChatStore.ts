@@ -17,7 +17,7 @@ export const useChatStore = () => {
     }
 
     // Add user message
-    const messageId = addMessage(activeConversationId, {
+    const messageId = await addMessage(activeConversationId, {
       content: content.trim(),
       role: 'user',
       conversationId: activeConversationId,

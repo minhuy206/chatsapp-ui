@@ -27,7 +27,7 @@ export class ChatWebSocketClient {
   private websocketUrl: string
   private cable: Consumer | null = null
   private subscriptions: Map<string, Subscription> = new Map()
-  private retryConfig: Required<WebSocketStreamingConfig['retryConfig']>
+  private readonly retryConfig: Required<WebSocketStreamingConfig['retryConfig']>
 
   constructor(config: WebSocketStreamingConfig) {
     this.websocketUrl = config.websocketUrl
@@ -37,6 +37,7 @@ export class ChatWebSocketClient {
       maxDelay: config.retryConfig?.maxDelay ?? 30000,
       ...config.retryConfig
     }
+    // Note: retryConfig stored for future retry implementation
   }
 
   connect(): void {
@@ -214,6 +215,13 @@ export class ChatWebSocketClient {
    */
   getActiveSubscriptionCount(): number {
     return this.subscriptions.size
+  }
+
+  /**
+   * Get retry configuration
+   */
+  getRetryConfig(): Required<WebSocketStreamingConfig['retryConfig']> {
+    return this.retryConfig
   }
 }
 

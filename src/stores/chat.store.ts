@@ -557,9 +557,5 @@ export const useSelectedModels = () => {
   return useChatStore((state) => {
     const selectedIds = state.selectedModels;
     return state.availableModels.filter(model => selectedIds.includes(model.id));
-  }, (a, b) => {
-    // Compare the arrays to prevent unnecessary re-renders
-    if (a.length !== b.length) return false;
-    return a.every((model, index) => model.id === b[index]?.id);
   });
 };
