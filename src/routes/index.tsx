@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Container } from '@/components/layout/Container'
 import { ResponsiveWrapper } from '@/components/layout/ResponsiveWrapper'
-import { MessageSquare, Zap, BarChart3, Crown } from 'lucide-react'
+import { MessageSquare, BarChart3, Crown } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   component: Index,
