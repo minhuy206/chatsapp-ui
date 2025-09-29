@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { ChatInputProps } from '@/types/chat.types';
-import { Send, Paperclip, Mic, Square } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Send, Paperclip, Mic, Square, Zap, Crown } from 'lucide-react';
 
 export const ChatInput: React.FC<ChatInputProps> = ({
   onSendMessage,
@@ -54,20 +57,36 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   const canSend = message.trim().length > 0 && !disabled;
 
   return (
-    <form onSubmit={handleSubmit} className="relative">
-      <div className="relative bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500">
+    <form onSubmit={handleSubmit} className="relative space-y-3">
+      <Card className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700 shadow-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition-all duration-200">
+        {/* Arena Battle Header */}
+        <div className="flex items-center justify-between px-4 py-2 border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50">
+          <div className="flex items-center space-x-2">
+            <Crown className="h-4 w-4 text-amber-500" />
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Battle Command</span>
+          </div>
+          <div className="flex items-center space-x-1">
+            <Badge variant="outline" className="text-xs px-2 py-0">
+              <Zap className="h-3 w-3 mr-1" />
+              Ready
+            </Badge>
+          </div>
+        </div>
+
         {/* Input Area */}
-        <div className="flex items-end space-x-2 p-3">
+        <div className="flex items-end space-x-3 p-4">
           {/* Attachment Button */}
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={handleFileUpload}
             disabled={disabled}
-            className="flex-shrink-0 p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="flex-shrink-0 h-10 w-10 p-0"
             title="Attach file"
           >
-            <Paperclip className="h-5 w-5" />
-          </button>
+            <Paperclip className="h-4 w-4" />
+          </Button>
 
           {/* Message Input */}
           <div className="flex-1 min-w-0">
@@ -79,7 +98,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
               placeholder={placeholder}
               disabled={disabled}
               rows={1}
-              className="block w-full resize-none border-0 bg-transparent px-0 py-1.5 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-0 sm:text-sm"
+              className="block w-full resize-none border-0 bg-transparent px-3 py-2 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:ring-0 rounded-lg border border-slate-200 dark:border-slate-700 focus:border-blue-500 transition-colors"
               style={{
                 maxHeight: '120px',
                 overflowY: 'auto',
@@ -88,65 +107,81 @@ export const ChatInput: React.FC<ChatInputProps> = ({
           </div>
 
           {/* Voice Recording Button */}
-          <button
+          <Button
             type="button"
+            variant={isRecording ? "destructive" : "ghost"}
+            size="sm"
             onClick={toggleRecording}
             disabled={disabled}
-            className={`flex-shrink-0 p-2 rounded-md transition-colors ${
-              isRecording
-                ? 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-900/20'
-                : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
-            } disabled:opacity-50 disabled:cursor-not-allowed`}
+            className="flex-shrink-0 h-10 w-10 p-0"
             title={isRecording ? 'Stop recording' : 'Start voice recording'}
           >
             {isRecording ? (
-              <Square className="h-5 w-5" />
+              <Square className="h-4 w-4" />
             ) : (
-              <Mic className="h-5 w-5" />
+              <Mic className="h-4 w-4" />
             )}
-          </button>
+          </Button>
 
           {/* Send Button */}
-          <button
+          <Button
             type="submit"
             disabled={!canSend}
-            className={`flex-shrink-0 p-2 rounded-md transition-colors ${
+            size="sm"
+            className={`flex-shrink-0 h-10 w-10 p-0 ${
               canSend
-                ? 'text-white bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
-                : 'text-gray-400 bg-gray-100 dark:bg-gray-700 cursor-not-allowed'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
+                : ''
             }`}
-            title="Send message"
+            title="Launch Battle"
           >
-            <Send className="h-5 w-5" />
-          </button>
+            <Send className="h-4 w-4" />
+          </Button>
         </div>
 
-        {/* Character Count */}
+        {/* Enhanced Character Count */}
         {message.length > 0 && (
-          <div className="px-3 pb-2">
-            <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
-              <span>Press Enter to send, Shift+Enter for new line</span>
-              <span className={message.length > 4000 ? 'text-red-500' : ''}>
+          <div className="px-4 pb-3">
+            <div className="flex justify-between items-center text-xs">
+              <div className="flex items-center space-x-2 text-slate-500 dark:text-slate-400">
+                <Zap className="h-3 w-3" />
+                <span>Enter to battle • Shift+Enter for new line</span>
+              </div>
+              <Badge
+                variant={message.length > 4000 ? "destructive" : "secondary"}
+                className="text-xs px-2 py-0"
+              >
                 {message.length}/4000
-              </span>
+              </Badge>
             </div>
           </div>
         )}
 
-        {/* Recording Indicator */}
+        {/* Enhanced Recording Indicator */}
         {isRecording && (
-          <div className="absolute inset-0 bg-red-50 dark:bg-red-900/20 border-2 border-red-300 dark:border-red-600 rounded-lg flex items-center justify-center">
-            <div className="flex items-center space-x-2 text-red-600 dark:text-red-400">
-              <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-              <span className="font-medium">Recording... Click to stop</span>
+          <div className="absolute inset-0 bg-red-50/90 dark:bg-red-900/30 backdrop-blur-sm border-2 border-red-300 dark:border-red-600 rounded-lg flex items-center justify-center">
+            <div className="flex items-center space-x-3 text-red-600 dark:text-red-400">
+              <div className="relative">
+                <div className="w-4 h-4 bg-red-500 rounded-full animate-pulse" />
+                <div className="absolute inset-0 w-4 h-4 bg-red-500 rounded-full animate-ping opacity-75" />
+              </div>
+              <span className="font-semibold">Recording Active</span>
+              <Badge variant="destructive" className="text-xs">Click to stop</Badge>
             </div>
           </div>
         )}
-      </div>
+      </Card>
 
-      {/* Input Instructions */}
-      <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 text-center">
-        AI models can make mistakes. Verify important information and think critically about responses.
+      {/* Arena Instructions */}
+      <div className="flex items-center justify-center space-x-4 text-xs text-slate-500 dark:text-slate-400">
+        <div className="flex items-center space-x-1">
+          <Crown className="h-3 w-3 text-amber-500" />
+          <span>AI Arena Mode</span>
+        </div>
+        <span>•</span>
+        <span>Models compete for the best response</span>
+        <span>•</span>
+        <span>Verify important information</span>
       </div>
     </form>
   );

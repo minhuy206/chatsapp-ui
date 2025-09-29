@@ -261,6 +261,25 @@ export const useChatStore = create<ChatStore>()(
       }));
     },
 
+    // Single model selection for new chat interface
+    setSelectedModel: (modelId: string) => {
+      set({
+        selectedModels: [modelId],
+      });
+
+      // Initialize streaming state for the model
+      get().updateStreamingState(modelId, {
+        isStreaming: false,
+        status: 'disconnected',
+        currentMessage: '',
+      });
+    },
+
+    getCurrentModel: () => {
+      const state = get();
+      return state.selectedModels.length > 0 ? state.selectedModels[0] : null;
+    },
+
     // Streaming management
     startStreaming: async (conversationId: string, messageId: string, models: string[]) => {
       console.log('[Store] Starting streaming for:', { conversationId, messageId, models });

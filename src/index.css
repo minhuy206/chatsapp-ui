@@ -3,6 +3,26 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Fix body/html flex layout issues */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  display: block !important;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  display: block;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

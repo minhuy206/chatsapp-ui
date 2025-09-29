@@ -104,6 +104,8 @@ export interface ChatActions {
   removeModel: (modelId: string) => void;
   toggleModel: (modelId: string) => void;
   updateModelConfig: (modelId: string, config: ModelConfig) => void;
+  setSelectedModel: (modelId: string) => void;
+  getCurrentModel: () => string | null;
 
   // Streaming management
   startStreaming: (conversationId: string, messageId: string, models: string[]) => void;
